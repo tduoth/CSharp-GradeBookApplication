@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using GradeBook.Enums;
 
@@ -27,5 +28,25 @@ namespace GradeBook.GradeBooks
             return 'F';
             
          }
+        public override void CalculateStatistics()
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students.");
+                return; 
+
+            }
+            base.CalculateStatistics();
+        }
+        public override void CalculateStudentStatistics(string name)
+        {
+            if (Students.Count < 5 )
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students.");
+                return;
+            }
+        
+            base.CalculateStudentStatistics(name);
+        }
     }
 }
