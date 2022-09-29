@@ -58,7 +58,21 @@ namespace GradeBook.UserInterfaces
              Console.WriteLine("Created gradebook {0}.", name);
              GradeBookUserInterface.CommandLoop(gradeBook);
          }
-public static void HelpCommand()
+        public static void LoadCommand(string command)
+        {
+            var parts = command.Split(' ');
+            if (parts.Length != 2)
+            {
+                Console.WriteLine("Command not valid, Load requires a name.");
+                return;
+            }
+            var name = parts[1];
+            var gradeBook = BaseGradeBook.Load(name);
+            if (gradeBook == null)
+                return;
+            GradeBookUserInterface.CommandLoop(gradeBook);
+        }
+        public static void HelpCommand()
          {
              Console.WriteLine("GradeBook accepts the following commands:");
              Console.WriteLine();
