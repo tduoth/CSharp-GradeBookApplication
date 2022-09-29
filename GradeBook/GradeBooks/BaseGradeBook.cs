@@ -1,55 +1,83 @@
-using System;
- using System.Linq;
- namespace GradeBook.GradeBooks
+namespace GradeBook.GradeBooks
  {
-     public class RankedGradeBook : BaseGradeBook
+     public class BaseGradeBook
+     public abstract class BaseGradeBook
      {
-         public RankedGradeBook(string name, bool isWeighted) : base(name, isWeighted)
+         public string Name { get; set; }
+         public List<Student> Students { get; set; }
+         public GradeBookType Type { get; set; }
+         public bool IsWeighted { get; set; }
+
+         public BaseGradeBook(string name)
+         public BaseGradeBook(string name, bool isWeighted)
          {
-             Type = Enums.GradeBookType.Ranked;
+             Name = name;
+             Students = new List<Student>();
+             IsWeighted = isWeighted;
          }
 
-         public override char GetLetterGrade(double averageGrade)
+         public void AddStudent(Student student)
+ public void Save()
+
+         public virtual double GetGPA(char letterGrade, StudentType studentType)
          {
-             if(Students.Count < 5)
+             var gpa = 0;
+             switch (letterGrade)
              {
-                 throw new InvalidOperationException("You must have at least 5 students to do ranked grading.");
+                 case 'A':
+                     return 4;
+                     gpa = 4;
+                     break;
+                 case 'B':
+                     return 3;
+                     gpa = 3;
+                     break;
+                 case 'C':
+                     return 2;
+                     gpa = 2;
+                     break;
+                 case 'D':
+                     return 1;
+                     gpa = 1;
+                     break;
              }
+             return 0;
 
-             var threshold = (int)Math.Ceiling(Students.Count*0.2);
-             var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
+             if (IsWeighted && (studentType == StudentType.Honors || studentType == StudentType.DualEnrolled))
+                 gpa++;
 
-             if(averageGrade >= grades[threshold-1])
-                 return 'A';
-             if (averageGrade >= grades[(threshold * 2) - 1])
-                 return 'B';
-             if (averageGrade >= grades[(threshold * 3) - 1])
-                 return 'C';
-             if (averageGrade >= grades[(threshold * 4) - 1])
-                 return 'D';
-             return 'F';
+             return gpa;
          }
 
-         public override void CalculateStatistics()
-         {
-             if(Students.Count() < 5)
+         public virtual void CalculateStatistics()
+public virtual void CalculateStatistics()
+             var internationalPoints = 0d;
+             var standardPoints = 0d;
+             var honorPoints = 0d;
+             var duelEnrolledPoints = 0d;
+             var dualEnrolledPoints = 0d;
+
+             foreach (var student in Students)
              {
-                 Console.WriteLine("Ranked grading requires at least 5 students.");
-                 return;
+public virtual void CalculateStatistics()
+                     case StudentType.Honors:
+                         honorPoints += student.AverageGrade;
+                         break;
+                     case StudentType.DuelEnrolled:
+                         duelEnrolledPoints += student.AverageGrade;
+                     case StudentType.DualEnrolled:
+                         dualEnrolledPoints += student.AverageGrade;
+                         break;
+                 }
              }
-
-             base.CalculateStatistics();
+public virtual void CalculateStatistics()
+                 Console.WriteLine("Average for students excluding honors and duel enrollment is " + (standardPoints / Students.Where(e => e.Type == StudentType.Standard).Count()));
+             if (honorPoints != 0)
+                 Console.WriteLine("Average for only honors students is " + (honorPoints / Students.Where(e => e.Type == StudentType.Honors).Count()));
+             if (duelEnrolledPoints != 0)
+                 Console.WriteLine("Average for only duel enrolled students is " + (duelEnrolledPoints / Students.Where(e => e.Type == StudentType.DuelEnrolled).Count()));
+             if (dualEnrolledPoints != 0)
+                 Console.WriteLine("Average for only duel enrolled students is " + (dualEnrolledPoints / Students.Where(e => e.Type == StudentType.DualEnrolled).Count()));
          }
 
-         public override void CalculateStudentStatistics(string name)
-         {
-             if (Students.Count() < 5)
-             {
-                 Console.WriteLine("Ranked grading requires at least 5 students.");
-                 return;
-             }
-
-             base.CalculateStudentStatistics(name);
-         }
-     }
- }
+         public virtual void CalculateStudentStatistics(string name)
