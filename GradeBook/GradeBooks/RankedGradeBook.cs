@@ -13,6 +13,7 @@ using System;
          {
              if(Students.Count < 5)
              {
+                 //sync
                  throw new InvalidOperationException("You must have at least 5 students to do ranked grading.");
              }
 

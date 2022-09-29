@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
      public class BaseGradeBook
      public abstract class BaseGradeBook
      {
+         //string sync
          public string Name { get; set; }
          public List<Student> Students { get; set; }
          public GradeBookType Type { get; set; }
@@ -25,7 +26,7 @@ using Newtonsoft.Json.Linq;
          }
 
          public void AddStudent(Student student)
- @@ -106,18 +109,27 @@ public void Save()
+    public void Save()
 
          public virtual double GetGPA(char letterGrade, StudentType studentType)
          {
@@ -58,7 +59,7 @@ using Newtonsoft.Json.Linq;
          }
 
          public virtual void CalculateStatistics()
- @@ -129,7 +141,7 @@ public virtual void CalculateStatistics()
+
              var internationalPoints = 0d;
              var standardPoints = 0d;
              var honorPoints = 0d;
@@ -67,7 +68,7 @@ using Newtonsoft.Json.Linq;
 
              foreach (var student in Students)
              {
- @@ -163,8 +175,8 @@ public virtual void CalculateStatistics()
+    public virtual void CalculateStatistics()
                      case StudentType.Honors:
                          honorPoints += student.AverageGrade;
                          break;
@@ -78,7 +79,7 @@ using Newtonsoft.Json.Linq;
                          break;
                  }
              }
- @@ -183,8 +195,8 @@ public virtual void CalculateStatistics()
+    public virtual void CalculateStatistics()
                  Console.WriteLine("Average for students excluding honors and duel enrollment is " + (standardPoints / Students.Where(e => e.Type == StudentType.Standard).Count()));
              if (honorPoints != 0)
                  Console.WriteLine("Average for only honors students is " + (honorPoints / Students.Where(e => e.Type == StudentType.Honors).Count()));
