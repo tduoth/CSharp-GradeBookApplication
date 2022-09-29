@@ -4,6 +4,7 @@ namespace GradeBook.UserInterfaces
 {
     public static class StartingUserInterface
     {
+        //test
         public static bool Quit = false;
         public static void CommandLoop()
         {
